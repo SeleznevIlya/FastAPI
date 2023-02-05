@@ -19,6 +19,7 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     username = Column(String, nullable=False)
     registered_at = Column(TIMESTAMP, default=datetime.utcnow)
     role_id = Column(Integer, ForeignKey(Role.id))
+
     role = relationship("Role", back_populates="user")
     '''
     email: str = Column(String(length=320), unique=True, index=True, nullable=False)
