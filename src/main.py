@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from operations.schemas import Trade
+from posts.schemas import Trade
 from typing import List
 
 from auth.router import router as auth_router
