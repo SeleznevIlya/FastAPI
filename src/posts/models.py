@@ -7,16 +7,18 @@ from sqlalchemy.orm import relationship
 
 class Category(Base):
     __tablename__ = "category"
+
     id = Column(Integer, primary_key=True, unique=True)
     category_name = Column(String, unique=True)
 
 
 class Post(Base):
     __tablename__ = "post"
+
     id = Column(Integer, primary_key=True, unique=True)
     header = Column(String, unique=True)
     content = Column(String)
-    datetime = Column(DateTime)
+    datetime = Column(DateTime, default=datetime.now())
     category_id = Column(Integer, ForeignKey(Category.id))
     user_id = Column(Integer, ForeignKey(User.id))
     post_rating = Column(Integer, default=0)
@@ -27,6 +29,7 @@ class Post(Base):
 
 class PostCategory(Base):
     __tablename__ = 'post_category'
+
     id = Column(Integer, primary_key=True, unique=True)
     post = Column(Integer, ForeignKey(Post.id))
     category = Column(Integer, ForeignKey(Category.id))
@@ -34,6 +37,7 @@ class PostCategory(Base):
 
 class Comment(Base):
     __tablename__ = "comment"
+
     id = Column(Integer, primary_key=True, unique=True)
     author = Column(Integer, ForeignKey(User.id))
     post = Column(Integer, ForeignKey(Post.id))

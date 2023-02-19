@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
+from src.auth.schemas import UserRead
 
 
 class Category(BaseModel):
@@ -25,4 +26,23 @@ class PostCreate(BaseModel):
 
 
 class PostUpdate(BaseModel):
+    pass
+
+
+class CommentBase(BaseModel):
+    content: str
+    datetime: datetime
+    comment_rating: int
+    author: UserRead
+
+
+class CommentList(CommentBase):
+    pass
+
+
+class CommentCreate(BaseModel):
+    content: str
+
+
+class CommentUpdate(CommentCreate):
     pass
