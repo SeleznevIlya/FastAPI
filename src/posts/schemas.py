@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from datetime import datetime
-from src.auth.schemas import UserRead
+from auth.schemas import UserRead
 
 
 class Category(BaseModel):
@@ -12,6 +12,7 @@ class PostBase(BaseModel):
     content: str
     datetime: datetime
     category_id: list[Category]
+    user_id: UserRead
 
     class Config:
         orm_mode = True
@@ -22,10 +23,12 @@ class PostList(PostBase):
 
 
 class PostCreate(BaseModel):
-    pass
+    header: str
+    content: str
+    category_id: int
 
 
-class PostUpdate(BaseModel):
+class PostUpdate(PostCreate):
     pass
 
 

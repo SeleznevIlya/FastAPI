@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Integer, TIMESTAMP,  JSON, ForeignKey, DateTime
 from datetime import datetime
 from database import Base
-from src.auth.models import User
+from auth.models import User
 from sqlalchemy.orm import relationship
 
 
@@ -11,6 +11,8 @@ class Category(Base):
     id = Column(Integer, primary_key=True, unique=True)
     category_name = Column(String, unique=True)
 
+    post = relationship('Post', secondary="post_category", back_populates='category')
+
 
 class Post(Base):
     __tablename__ = "post"
@@ -19,28 +21,29 @@ class Post(Base):
     header = Column(String, unique=True)
     content = Column(String)
     datetime = Column(DateTime, default=datetime.now())
-    category_id = Column(Integer, ForeignKey(Category.id))
+    category_id = Column(Integer, ForeignKey("category.id"))
     user_id = Column(Integer, ForeignKey(User.id))
     post_rating = Column(Integer, default=0)
 
-    author = relationship('User', back_populates="post")
-    category = relationship('Category', back_populates='post')
+    user = relationship('User', back_populates="post")
+    category = relationship('Category', secondary="post_category", back_populates='post')
 
 
 class PostCategory(Base):
     __tablename__ = 'post_category'
 
     id = Column(Integer, primary_key=True, unique=True)
-    post = Column(Integer, ForeignKey(Post.id))
-    category = Column(Integer, ForeignKey(Category.id))
+    post = Column(Integer, ForeignKey("post.id"))
+    category = Column(Integer, ForeignKey("category.id"))
 
 
 class Comment(Base):
     __tablename__ = "comment"
 
     id = Column(Integer, primary_key=True, unique=True)
-    author = Column(Integer, ForeignKey(User.id))
-    post = Column(Integer, ForeignKey(Post.id))
+    author_id = Column(Integer, ForeignKey("user.id"))
+    post_id = Column(Integer, ForeignKey("post.id"))
     content = Column(Integer)
     datetime = Column(DateTime)
     comment_rating = Column(Integer, default=0)
+

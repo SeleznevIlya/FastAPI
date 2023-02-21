@@ -7,6 +7,7 @@ from datetime import datetime
 
 class Role(Base):
     __tablename__ = 'role'
+    __table_args__ = {'extend_existing': True}
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=True)
     permissions = Column(JSON)
@@ -15,6 +16,7 @@ class Role(Base):
 
 
 class User(SQLAlchemyBaseUserTable[int], Base):
+    __table_args__ = {'extend_existing': True}
     id = Column(Integer, primary_key=True, unique=True)
     username = Column(String, nullable=False)
     registered_at = Column(TIMESTAMP, default=datetime.utcnow)
