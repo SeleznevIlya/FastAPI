@@ -5,7 +5,7 @@ from auth.manager import get_user_manager
 from fastapi_users import FastAPIUsers
 from config import SECRET
 
-cookie_transport = CookieTransport(cookie_max_age=3600)
+cookie_transport = CookieTransport(cookie_name="cookie", cookie_domain='127.0.0.1', cookie_max_age=3600)
 
 
 def get_jwt_strategy() -> JWTStrategy:
@@ -22,4 +22,3 @@ fastapi_users = FastAPIUsers[User, int](
     get_user_manager,
     [auth_backend],
 )
-

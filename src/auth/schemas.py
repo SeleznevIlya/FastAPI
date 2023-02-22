@@ -1,5 +1,15 @@
 from fastapi_users import schemas
 from pydantic.fields import Optional
+from pydantic import BaseModel, EmailStr
+from typing import List
+
+
+class EmailBase(BaseModel):
+    email: EmailStr
+
+
+class EmailSchema(BaseModel):
+    email: List[EmailStr]
 
 
 class UserRead(schemas.BaseUser[int]):

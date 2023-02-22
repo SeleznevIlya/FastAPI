@@ -1,6 +1,4 @@
 from fastapi import FastAPI
-from typing import List
-
 from auth.router import router as auth_router
 from posts.router import router as post_router
 

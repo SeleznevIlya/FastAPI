@@ -6,6 +6,7 @@ from fastapi_users import (BaseUserManager,
                            exceptions,
                            models,
                            schemas)
+from auth.utils import send_email_after_registration
 
 from auth.models import User
 from auth.utils import get_user_db
@@ -17,6 +18,7 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
     verification_token_secret = SECRET
 
     async def on_after_register(self, user: User, request: Optional[Request] = None):
+        await send_email_after_registration([user.email])
         print(f"User {user.id} has registered.")
 
     async def on_after_forgot_password(
