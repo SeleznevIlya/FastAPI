@@ -11,7 +11,7 @@ class PostBase(BaseModel):
     header: str
     content: str
     datetime: datetime
-    category_id: list[Category]
+    category_id: Category
     user_id: UserRead
 
     class Config:
@@ -26,6 +26,8 @@ class PostCreate(BaseModel):
     header: str
     content: str
     category_id: int
+
+
 
 
 class PostUpdate(PostCreate):
