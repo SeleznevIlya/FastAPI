@@ -11,8 +11,8 @@ class PostBase(BaseModel):
     header: str
     content: str
     datetime: datetime
-    category_id: Category
-    user_id: UserRead
+    category_id: int
+    user_id: int
 
     class Config:
         orm_mode = True

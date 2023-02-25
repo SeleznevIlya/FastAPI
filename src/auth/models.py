@@ -24,6 +24,7 @@ class User(SQLAlchemyBaseUserTable[int], Base):
 
     role = relationship("Role", back_populates="user")
     post = relationship("Post", back_populates="user")
+    verify_user = relationship("VerifyUser", back_populates="user")
     '''
     email: str = Column(String(length=320), unique=True, index=True, nullable=False)
     hashed_password: str = Column(String(length=1024), nullable=False)
@@ -31,3 +32,15 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     is_superuser: bool = Column(Boolean, default=False, nullable=False)
     is_verified: bool = Column(Boolean, default=False, nullable=False)
     '''
+
+
+class VerifyUser(Base):
+    __table_args__ = {'extend_existing': True}
+    __tablename__ = 'verify_user'
+
+    id = Column(Integer, primary_key=True, unique=True)
+    code = Column(String)
+    user_id = Column(Integer, ForeignKey("user.id"))
+
+    user = relationship("User", back_populates='verify_user')
+

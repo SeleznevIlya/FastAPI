@@ -14,19 +14,18 @@ router = APIRouter(
 )
 
 
-@router.get('/')
+@router.get('/', response_model=List[PostList])
 async def get_posts(session: AsyncSession = Depends(get_async_session)):
 	query = select(Post)
 	result = await session.execute(query)
-	return result.all()
+	return result.scalars().all()
 
 
-@router.get('/{id}')
-async def get_post(id: int, session: AsyncSession = Depends(get_async_session)):
-	query = select(Post).where(Post.id == id)
-	print(query)
+@router.get('/{post_id}/', response_model=List[PostBase])
+async def get_post(post_id: int, session: AsyncSession = Depends(get_async_session)):
+	query = select(Post).where(Post.id == post_id)
 	result = await session.execute(query)
-	return result
+	return result.scalars().all()
 
 
 @router.post('/')

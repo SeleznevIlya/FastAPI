@@ -1,3 +1,6 @@
+import os
+
+import pyotp
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi_users_db_sqlalchemy import SQLAlchemyUserDatabase
 from fastapi import Depends
@@ -27,3 +30,23 @@ async def send_email_after_registration(email: List[EmailStr]) -> JSONResponse:
     fm = FastMail(conf)
     await fm.send_message(message)
     return JSONResponse(status_code=200, content={"message": "email has been sent"})
+
+
+async def send_email_with_verify_code(secret_code: str, email: List[EmailStr]) -> JSONResponse:
+
+    html = f"""<p>Verify code: {secret_code}</p> """
+
+    message = MessageSchema(
+        subject="Fastapi-Mail module",
+        recipients=email,
+        body=html,
+        subtype=MessageType.html)
+
+    fm = FastMail(conf)
+    await fm.send_message(message)
+    return JSONResponse(status_code=200, content={"message": "email has been sent"})
+
+
+async def create_otp_for_verify():
+    code_generator = pyotp.TOTP(os.getenv('OTP_SECRET_KEY'))
+    return code_generator.now()
