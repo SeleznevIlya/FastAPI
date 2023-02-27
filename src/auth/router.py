@@ -6,7 +6,7 @@ from database import get_async_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from auth.dependencies import current_user
 from auth.models import User
-from auth.service import verify_user, create_verify_token
+from auth.service import verify_user, create_verification_token
 
 router = APIRouter()
 
@@ -36,9 +36,9 @@ router.include_router(
 )
 
 
-@router.post("/custom_request_verify_token")
-async def create_custom_verify_token(user: User = Depends(current_user), session: AsyncSession = Depends(get_async_session)):
-    return await create_verify_token(user, session)
+@router.post("/custom_request_verification_token")
+async def create_custom_verification_token(user: User = Depends(current_user), session: AsyncSession = Depends(get_async_session)):
+    return await create_verification_token(user, session)
 
 
 @router.post("/custom_verify/")

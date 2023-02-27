@@ -6,7 +6,7 @@ from auth.utils import (delete_code_from_db,
 						create_otp_for_verify)
 
 
-async def create_verify_token(user, session):
+async def create_verification_token(user, session):
 	if not user.is_verified:
 		await delete_code_from_db(user, session)
 		secret_code = await create_otp_for_verify()
