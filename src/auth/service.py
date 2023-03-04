@@ -3,7 +3,7 @@ from auth.models import VerifyUser
 from auth.utils import (delete_code_from_db,
 						update_users_verified_status,
 						send_email_with_verify_code,
-						create_otp_for_verify)
+						create_otp_for_verify,)
 
 
 async def create_verification_token(user, session):
@@ -17,6 +17,7 @@ async def create_verification_token(user, session):
 		await session.execute(stmt)
 		await session.commit()
 		await send_email_with_verify_code(secret_code, [user.email])
+		#send_email_with_verify_code.delay(secret_code, [user.email])
 		return {
 			"status": "success",
 			"data": None,

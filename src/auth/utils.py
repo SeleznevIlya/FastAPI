@@ -18,20 +18,6 @@ async def get_user_db(session: AsyncSession = Depends(get_async_session)):
     yield SQLAlchemyUserDatabase(session, User)
 
 
-async def send_email_after_registration(email: List[EmailStr]) -> JSONResponse:
-    html = """<p>Thank you for registering</p> """
-
-    message = MessageSchema(
-        subject="Fastapi-Mail module",
-        recipients=email,
-        body=html,
-        subtype=MessageType.html)
-
-    fm = FastMail(conf)
-    await fm.send_message(message)
-    return JSONResponse(status_code=200, content={"message": "email has been sent"})
-
-
 async def send_email_with_verify_code(secret_code: str, email: List[EmailStr]) -> JSONResponse:
 
     html = f"""<p>Verify code: {secret_code}</p> """

@@ -6,7 +6,7 @@ from redis import asyncio as aioredis
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from fastapi_cache.decorator import cache
-
+import time
 
 app = FastAPI(
     title='My FastAPI App'
