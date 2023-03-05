@@ -17,7 +17,6 @@ async def create_verification_token(user, session):
 		await session.execute(stmt)
 		await session.commit()
 		await send_email_with_verify_code(secret_code, [user.email])
-		#send_email_with_verify_code.delay(secret_code, [user.email])
 		return {
 			"status": "success",
 			"data": None,

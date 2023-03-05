@@ -14,6 +14,9 @@ class Role(Base):
 
     user = relationship("User", back_populates="role")
 
+    def __str__(self):
+        return f'({self.id}, {self.name}, {self.permissions})'
+
 
 class User(SQLAlchemyBaseUserTable[int], Base):
     __table_args__ = {'extend_existing': True}
