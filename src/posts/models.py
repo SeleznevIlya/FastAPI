@@ -23,10 +23,12 @@ class Post(Base):
     datetime = Column(DateTime, default=datetime.now())
     category_id = Column(Integer, ForeignKey("category.id"))
     user_id = Column(Integer, ForeignKey(User.id))
-    post_rating = Column(Integer, default=0)
+    rating = Column(Integer, default=0)
 
     user = relationship('User', back_populates="post")
     category = relationship('Category', secondary="post_category", back_populates='post')
+    comment = relationship("Comment", back_populates="post")
+
 
 
 class PostCategory(Base):
@@ -43,7 +45,8 @@ class Comment(Base):
     id = Column(Integer, primary_key=True, unique=True)
     author_id = Column(Integer, ForeignKey("user.id"))
     post_id = Column(Integer, ForeignKey("post.id"))
-    content = Column(Integer)
-    datetime = Column(DateTime)
-    comment_rating = Column(Integer, default=0)
+    content = Column(String)
+    datetime = Column(DateTime, default=datetime.now())
+    rating = Column(Integer, default=0)
 
+    post = relationship("Post", back_populates="comment")

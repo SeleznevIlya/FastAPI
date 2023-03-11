@@ -13,6 +13,8 @@ class PostBase(BaseModel):
     datetime: datetime
     category_id: int
     user_id: int
+    rating: int
+
 
     class Config:
         orm_mode = True
@@ -28,8 +30,6 @@ class PostCreate(BaseModel):
     category_id: int
 
 
-
-
 class PostUpdate(PostCreate):
     pass
 
@@ -37,8 +37,12 @@ class PostUpdate(PostCreate):
 class CommentBase(BaseModel):
     content: str
     datetime: datetime
-    comment_rating: int
-    author: UserRead
+    rating: int
+    author_id: int
+    post_id: int
+
+    class Config:
+        orm_mode = True
 
 
 class CommentList(CommentBase):
